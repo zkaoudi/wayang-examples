@@ -1,0 +1,18 @@
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL,
+    amount DOUBLE PRECISION NOT NULL,
+    transaction_date DATE DEFAULT CURRENT_DATE
+);
+
+INSERT INTO transactions (customer_id, amount, transaction_date) VALUES
+(1, 500.00, '2024-11-15'),
+(1, 1200.50, '2024-12-01'),
+(2, 250.75, '2024-12-05'),
+(3, 890.00, '2025-01-10'),
+(3, 15000.00, '2025-02-22'),
+(4, 50.00, '2025-03-01'),
+(4, 700.00, '2025-03-12'),
+(5, 2100.00, '2025-04-07'),
+(6, 300.00, '2025-05-15'),
+(6, 9999.99, '2025-06-01');
