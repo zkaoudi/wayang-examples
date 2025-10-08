@@ -6,3 +6,5 @@ Examples of simple Wayang jobs
 2. If you want to run a job with Spark, make sure that you use these Java VM options:
 
    --add-exports java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED    --add-opens java.base/java.io=ALL-UNNAMED   --add-opens java.base/java.nio=ALL-UNNAMED    --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.invoke=ALL-UNNAMED   --add-opens java.base/sun.security.util=ALL-UNNAMED   --add-opens java.base/sun.security.action=ALL-UNNAMED
+
+3. If you want to run the `CustomerTransactionHybridJoin` job make sure you load into a PostgreSQL server the right data into a `transactions` table. See the load2database file.
