@@ -20,5 +20,6 @@ Counts the number of words in a text file.
 Reads stock data from a CSV file and finds the average price of stocks for 2022
 
 ### Customer-Transactions Hybrid Join example
-Joins and filters data for customers stored in a CSV file with transactions stored in a Postgres table.
+Joins customers data stored in a CSV file with transactions data stored in a Postgres table.
+
 Note: If you want to run the `CustomerTransactionHybridJoin` job make sure you load into a PostgreSQL server the right data into a `transactions` table. See [this file](./src/main/resources/load2database).
