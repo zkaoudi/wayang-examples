@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.release>17</maven.compiler.release>
         <encoding>UTF-8</encoding>
         <scala.tools.version>2.12</scala.tools.version>
         <scala.version>2.12.18</scala.version>
+        <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
@@ -58,12 +58,6 @@
             <groupId>org.apache.wayang</groupId>
             <artifactId>wayang-giraph</artifactId>
             <version>1.1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.12</artifactId>
-            <version>3.5.7</version>
         </dependency>
 
     </dependencies>
