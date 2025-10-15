@@ -22,30 +22,33 @@ import org.apache.wayang.api.JavaPlanBuilder;
 import org.apache.wayang.basic.data.Tuple2;
 import org.apache.wayang.core.api.Configuration;
 import org.apache.wayang.core.api.WayangContext;
-import org.apache.wayang.flink.Flink;
+import org.apache.wayang.java.Java;
+import org.apache.wayang.spark.Spark;
 
 import java.util.Collection;
 import java.util.Arrays;
 
 public class WordCount {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         /* Get a plan builder */
         WayangContext wayangContext = new WayangContext(new Configuration())
 
                 /* Uncomment the platform you want to use */
 //                .withPlugin(Java.basicPlugin());
-//                .withPlugin(Spark.basicPlugin());
-                .withPlugin(Flink.basicPlugin());
+                .withPlugin(Spark.basicPlugin());
+
         JavaPlanBuilder planBuilder = new JavaPlanBuilder(wayangContext)
                 .withJobName("WordCount")
                 .withUdfJarOf(WordCount.class);
 
-        /* Start building the Apache WayangPlan */
+        /* Start building the Wayang Plan */
         Collection<Tuple2<String, Integer>> wordcounts = planBuilder
+                /* Use the following if you do not use collect as a sink */
+//        planBuilder
                 /* Read the text file */
-                .readTextFile("file:/Users/zoi/Work/wayang-test/src/main/resources/input/test.txt").withName("Load file")
+                .readTextFile("file:/Users/zoi/Work/WAYANG/wayang-examples/src/main/resources/input/test.txt").withName("Load file")
 
                 /* Split each line by non-word characters */
                 .flatMap(line -> Arrays.asList(line.split("\\W+")))
@@ -65,10 +68,20 @@ public class WordCount {
                 )
                 .withName("Add counters")
 
+                /* Use the following if you just want to see the execution plan */
+//                .build().explain(false);
+
                 /* Execute the plan and collect the results */
                 .collect();
 
         System.out.println(wordcounts);
+
+        /* You can replace the collect sink with one of the following options */
+                /* Write the results to a text file */
+//                .writeTextFile("file:/Users/zoi/Work/WAYANG/wayang-examples/src/main/resources/output/wordcount.txt", tuple2 -> tuple2.getField0().toString()+":"+tuple2.getField1(), "job1");
+                /* Print the results to the console */
+//                .forEach(tuple2 -> System.out.println(tuple2.getField0().toString()+":"+tuple2.getField1()));
+
     }
 }
 

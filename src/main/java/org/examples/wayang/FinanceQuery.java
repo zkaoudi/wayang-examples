@@ -57,10 +57,7 @@ public class FinanceQuery {
                     return new Record(vals[0], vals [1], Double.parseDouble(vals[2]), 1);
                 })
                 /* Filter for year 2022 */
-                .filter(record -> {
-                    return ((String)record.getField(0)).contains("2022");
-                })
-
+                .filter(record -> ((String) record.getField(0)).contains("2022"))
 
                 /* Aggregate */
                 .reduceByKey(record -> record.getField(1), (r1, r2) -> new Record(r1.getField(0), r1.getField(1), r1.getDouble(2) + r2.getDouble(2), r1.getInt(3) + r2.getInt(3)))
@@ -68,7 +65,7 @@ public class FinanceQuery {
                 .map(r -> new Record(r.getField(1), r.getDouble(2)/r.getInt(3)))
                 /* Uncomment the following line to force execution of this operator on Spark
                 * For the rest of the operators the optimizer will figure out where it is best to execute them */
-                .withTargetPlatform(Spark.platform())
+//                .withTargetPlatform(Spark.platform())
                 .collect();
 
         /* Print out the results */
