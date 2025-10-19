@@ -29,6 +29,8 @@ import org.apache.wayang.java.Java;
 import org.apache.wayang.flink.Flink;
 import org.apache.wayang.giraph.Giraph;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 
 public class FinanceQuery {
@@ -48,10 +50,13 @@ public class FinanceQuery {
                 .withJobName("FinanceQuery")
                 .withUdfJarOf(FinanceQuery.class);
 
+        /* Get the absolute path of the input file */
+        Path path = Paths.get("src/main/resources/input/Stock_Prices_2022.csv").toAbsolutePath();
+
         /* Start building the Apache Wayang Plan */
         Collection<Record> output = planBuilder
                 /* Read the text file */
-                .readTextFile("file:/Users/zoi/Work/wayang-test/src/main/resources/input/Stock_Prices_2022.csv")
+                .readTextFile("file:" + path.toUri().getPath())
                 .map(line -> {
                     String [] vals = line.split("\\,");
                     return new Record(vals[0], vals [1], Double.parseDouble(vals[2]), 1);

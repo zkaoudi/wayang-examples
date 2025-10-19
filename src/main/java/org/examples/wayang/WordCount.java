@@ -25,6 +25,8 @@ import org.apache.wayang.core.api.WayangContext;
 import org.apache.wayang.java.Java;
 import org.apache.wayang.spark.Spark;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Arrays;
 
@@ -43,12 +45,15 @@ public class WordCount {
                 .withJobName("WordCount")
                 .withUdfJarOf(WordCount.class);
 
+        /* Get the absolute path of the input file */
+        Path path = Paths.get("src/main/resources/input/test.txt").toAbsolutePath();
+
         /* Start building the Wayang Plan */
         Collection<Tuple2<String, Integer>> wordcounts = planBuilder
                 /* Use the following if you do not use collect as a sink */
 //        planBuilder
                 /* Read the text file */
-                .readTextFile("file:/Users/zoi/Work/WAYANG/wayang-examples/src/main/resources/input/test.txt").withName("Load file")
+                .readTextFile("file:" + path.toUri().getPath()).withName("Load file")
 
                 /* Split each line by non-word characters */
                 .flatMap(line -> Arrays.asList(line.split("\\W+")))
