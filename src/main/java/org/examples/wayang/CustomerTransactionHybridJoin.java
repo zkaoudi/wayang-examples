@@ -29,6 +29,8 @@ import org.apache.wayang.postgres.Postgres;
 import org.apache.wayang.postgres.operators.PostgresTableSource;
 import org.apache.wayang.spark.Spark;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 
 public class CustomerTransactionHybridJoin {
@@ -55,10 +57,12 @@ public class CustomerTransactionHybridJoin {
                 planBuilder.readTable(new PostgresTableSource("transactions"))
                         .filter(tuple -> (Double) tuple.getField(2) > 1000);
 
+        /* Get the absolute path of the input file */
+        Path path = Paths.get("src/main/resources/input/customers.csv").toAbsolutePath();
 
         DataQuantaBuilder<?, Record> customers = planBuilder
                 // Read customers from csv file
-                .readTextFile("file:///Users/zoi/Work/wayang-test/src/main/resources/input/customers.csv")
+                .readTextFile("file:" + path.toUri().getPath())
 
         // Map customers to Record(customerId, name, location)
                 .map(line -> {
